@@ -65,31 +65,6 @@ workspace "Big Bank plc" "This is an example workspace to illustrate the key fea
         mainframeBankingSystemFacade -> mainframe "Makes API calls to" "XML/HTTPS"
         emailComponent -> email "Sends e-mail using"
 
-        deploymentEnvironment "Development" {
-            deploymentNode "Developer Laptop" "" "Microsoft Windows 10 or Apple macOS" {
-                deploymentNode "Web Browser" "" "Chrome, Firefox, Safari, or Edge" {
-                    developerSinglePageApplicationInstance = containerInstance singlePageApplication
-                }
-                deploymentNode "Docker Container - Web Server" "" "Docker" {
-                    deploymentNode "Apache Tomcat" "" "Apache Tomcat 8.x" {
-                        developerWebApplicationInstance = containerInstance webApplication
-                        developerApiApplicationInstance = containerInstance apiApplication
-                    }
-                }
-                deploymentNode "Docker Container - Database Server" "" "Docker" {
-                    deploymentNode "Database Server" "" "Oracle 12c" {
-                        developerDatabaseInstance = containerInstance database
-                    }
-                }
-            }
-            deploymentNode "Big Bank plc" "" "Big Bank plc data center" "" {
-                deploymentNode "bigbank-dev001" "" "" "" {
-                    softwareSystemInstance mainframe
-                }
-            }
-
-        }
-
     }
 
     views {
@@ -140,16 +115,6 @@ workspace "Big Bank plc" "This is an example workspace to illustrate the key fea
             database -> securityComponent "Returns user data to"
             securityComponent -> signinController "Returns true if the hashed password matches"
             signinController -> singlePageApplication "Sends back an authentication token to"
-            autoLayout
-        }
-
-        deployment internetBankingSystem "Development" "DevelopmentDeployment" {
-            include *
-            animation {
-                developerSinglePageApplicationInstance
-                developerWebApplicationInstance developerApiApplicationInstance
-                developerDatabaseInstance
-            }
             autoLayout
         }
 
